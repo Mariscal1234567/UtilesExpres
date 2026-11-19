@@ -1,0 +1,629 @@
+<title>ÚtilesExpres | Papelería y útiles escolares</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { navy: '#0b1d3a', navy2: '#102a52', night: '#070d1a', crimson: '#d41f3c', emerald2: '#0f9d6a' },
+        fontFamily: { sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'] }
+      }
+    }
+  }
+</script>
+<script type="module" src="./JS/cuenta-ui.js"></script>
+<link rel="stylesheet" href="./estilos/estilos.css">
+<div class="font-sans bg-white text-slate-800">
+
+  <!-- HEADER -->
+  <header class="bg-navy text-white">
+    <meta charset="UTF-8">
+    <div class="wrap py-3 flex items-center gap-3 lg:gap-6">
+      <button id="burger" class="lg:hidden btn h-11 w-11 grid place-items-center rounded-lg bg-white/10 hover:bg-white/20" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a href="#" class="flex items-center gap-2 shrink-0" aria-label="ÚtilesExpres, inicio">
+        <span class="grid place-items-center h-10 w-10 rounded-xl bg-white text-navy">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11a2.1 2.1 0 00-3-3L5 16l-1 4z"/><path d="M14 7l3 3"/></svg>
+        </span>
+        <span class="leading-none">
+          <span class="block text-xl font-extrabold tracking-tight">ÚtilesExpres</span>
+          <span class="block text-[10px] uppercase tracking-[.22em] text-sky-200">Papelería &amp; Arte</span>
+        </span>
+      </a>
+      <form id="searchDesktop" class="hidden lg:flex flex-1 max-w-3xl mx-auto relative" role="search">
+        <label for="q1" class="sr-only">Buscar productos</label>
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="q1" type="search" placeholder="Buscar productos..." class="w-full h-12 rounded-full bg-white text-slate-900 pl-12 pr-28 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-sky-400/40">
+        <button class="btn absolute right-1.5 top-1.5 h-9 px-5 rounded-full bg-crimson hover:bg-[#b9162f] text-sm font-semibold" type="submit">Buscar</button>
+      </form>
+      <div class="ml-auto lg:ml-0 flex items-center gap-2 sm:gap-3">
+       
+
+<div class="relative hidden sm:block" id="contenedorCuenta">
+
+  <a href="#" id="botonCuenta"
+     class="btn inline-flex items-center gap-2 h-11 px-4 rounded-lg hover:bg-white/10 text-sm font-semibold">
+    <svg width="20" height="20" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
+    </svg>
+    <span id="textoBotonCuenta">Acceder / Registrarse</span>
+  </a>
+
+  <div id="menuCuenta"
+       class="hidden absolute right-0 top-full mt-2 w-80 rounded-2xl bg-white text-slate-800 shadow-2xl border border-slate-200 z-[100] overflow-hidden">
+
+    <div class="bg-slate-50 p-5 border-b border-slate-200">
+      <p class="text-xs font-semibold text-slate-500 uppercase">
+        Mi cuenta ÚtilesExpres
+      </p>
+      <p id="menuNombre" class="font-bold text-slate-900 mt-2">
+        Cliente
+      </p>
+      <p id="menuCorreo" class="text-sm text-slate-500 break-all">
+        correo@ejemplo.com
+      </p>
+    </div>
+
+    <div class="p-2">
+      <button id="opcionPerfil" type="button"
+              class="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-100">
+        👤 Mi perfil
+      </button>
+
+      <button id="opcionPedidos" type="button"
+              class="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-100">
+        📦 Mis pedidos
+      </button>
+
+      <button id="opcionDirecciones" type="button"
+              class="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-100">
+        📍 Mis direcciones
+      </button>
+    </div>
+    <div class="border-t border-slate-200 p-2">
+      <button id="opcionCerrarSesion" type="button"
+              class="w-full text-left px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 font-semibold">
+        Cerrar sesión
+      </button>
+    </div>
+
+  </div>
+</div>
+<!-- Panel compacto para editar el perfil -->
+
+<!-- PANEL MI PERFIL - TRAZO -->
+<div id="panelPerfil"
+     class="hidden fixed inset-0 z-[200] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+
+  <div class="w-full max-w-sm max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl text-slate-800">
+
+    <!-- Encabezado -->
+    <div class="bg-[#0B1D3A] p-5 text-white">
+
+      <div class="flex items-center justify-between mb-5">
+        <span class="text-xs font-bold tracking-widest text-blue-200">
+          ÚTILESEXPRES · MI PERFIL
+        </span>
+
+        <button id="cerrarPerfil" type="button"
+                class="w-8 h-8 rounded-lg hover:bg-white/10 text-xl"
+                aria-label="Cerrar perfil">
+          &times;
+        </button>
+      </div>
+
+      <div class="flex items-center gap-4">
+
+        <div id="perfilAvatar"
+             class="w-16 h-16 shrink-0 rounded-2xl bg-blue-700 flex items-center justify-center text-2xl font-bold shadow-lg">
+          TC
+        </div>
+
+        <div class="min-w-0">
+          <h2 id="perfilNombreVisible"
+              class="text-lg font-bold truncate">
+            Nombre del cliente
+          </h2>
+
+          <p class="text-sm text-blue-200">
+            Miembro de ÚtilesExpres
+          </p>
+
+          <div class="flex items-center gap-2 mt-2">
+            <span class="w-2 h-2 rounded-full bg-green-400"></span>
+            <span class="text-xs text-green-200">
+              Cuenta activa
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Formulario -->
+    <form id="formularioPerfil" class="p-5 space-y-4">
+
+      <h3 class="text-sm font-bold text-[#0B1D3A]">
+        Información personal
+      </h3>
+
+      <div>
+        <label for="perfilNombre"
+               class="block text-sm font-semibold mb-1">
+          Nombre completo
+        </label>
+
+        <input id="perfilNombre" type="text" required
+               autocomplete="name"
+               class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+      </div>
+
+      <div>
+        <label for="perfilCorreo"
+               class="block text-sm font-semibold mb-1">
+          Correo electrónico
+        </label>
+
+        <input id="perfilCorreo" type="email" disabled
+               class="w-full border border-slate-200 bg-slate-100 rounded-xl px-4 py-3 text-slate-500">
+
+        <p class="text-xs text-slate-500 mt-2">
+          El cambio de correo requiere verificación.
+        </p>
+      </div>
+
+      <div>
+        <label for="perfilTelefono"
+               class="block text-sm font-semibold mb-1">
+          Número de celular
+        </label>
+
+        <input id="perfilTelefono" type="tel"
+               autocomplete="tel"
+               placeholder="+591 70000000"
+               class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+      </div>
+
+      <p id="mensajePerfil" role="status"
+         class="text-sm text-slate-600"></p>
+
+      <button id="guardarPerfil" type="submit"
+              class="w-full bg-[#0B1D3A] hover:bg-[#17345C] text-white font-bold py-3 rounded-xl transition shadow-md">
+        Guardar cambios
+      </button>
+
+      <p class="text-center text-xs text-slate-400">
+        Tus datos personales están protegidos
+      </p>
+
+        </form>
+
+  </div>
+</div>
+
+
+        <button id="cartBtn" class="btn relative h-11 w-11 grid place-items-center rounded-lg bg-white/10 hover:bg-white/20" aria-label="Carrito de compras">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a1.5 1.5 0 001.5 1.2h8.2a1.5 1.5 0 001.5-1.1L20 8H6"/><circle cx="10" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/></svg>
+          <span id="cartCount" class="num absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-crimson text-[11px] font-bold grid place-items-center">0</span>
+        </button>
+      </div>
+    </div>
+    <form id="searchMobile" class="wrap pb-3 lg:hidden relative" role="search">
+      <label for="q2" class="sr-only">Buscar productos</label>
+      <svg class="absolute left-7 top-1/2 -translate-y-[60%] text-slate-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q2" type="search" placeholder="Buscar productos..." class="w-full h-11 rounded-full bg-white text-slate-900 pl-12 pr-4 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-sky-400/40">
+    </form>
+    <nav id="menu" class="hidden lg:block bg-navy2 border-t border-white/10" aria-label="Categorías">
+      <ul id="navList" class="wrap py-1 lg:flex lg:items-center lg:gap-1"></ul>
+    </nav>
+
+<!-- VENTANA DE CUENTA -->
+<div id="ventanaCuenta" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-4">
+
+  <div class="relative w-full max-w-md rounded-2xl bg-white p-6 text-gray-900 shadow-2xl">
+
+    <button
+      id="cerrarCuenta"
+      type="button"
+      class="absolute right-4 top-3 text-3xl text-gray-500"
+      aria-label="Cerrar ventana"
+    >&times;</button>
+
+    <h2 id="tituloCuenta" class="mb-2 text-center text-2xl font-bold text-blue-950">
+      Entrar a mi cuenta
+    </h2>
+
+    <p id="descripcionCuenta" class="mb-6 text-center text-gray-600">
+      Ingresa tus datos para continuar.
+    </p>
+
+    <form id="formularioCuenta" class="space-y-4">
+
+      <div id="campoNombre" class="hidden">
+        <label for="nombreCuenta" class="mb-1 block font-semibold">
+          Nombre completo
+        </label>
+        <input
+  id="nombreCuenta"
+  type="text"
+  autocomplete="name"
+  class="w-full rounded-lg border p-3 text-lg 
+text-gray-900 bg-white placeholder:text-gray-500"
+  placeholder="Escribe tu nombre"
+>
+      </div>
+
+      <div>
+        <label for="correoCuenta" class="mb-1 block font-semibold">
+          Correo electrónico
+        </label>
+        <input
+          id="correoCuenta"
+          type="email"
+          autocomplete="email"
+          required
+          class="w-full rounded-lg border p-3 text-lg 
+text-gray-900 bg-white placeholder:text-gray-500"
+          placeholder="ejemplo@correo.com"
+        >
+      </div>
+
+      <div>
+        <label for="claveCuenta" class="mb-1 block font-semibold">
+          Contraseña
+        </label>
+        <input
+          id="claveCuenta"
+          type="password"
+          autocomplete="current-password"
+          required
+          minlength="6"
+          class="w-full rounded-lg border p-3 text-lg 
+text-gray-900 bg-white placeholder:text-gray-500"
+          placeholder="Escribe tu contraseña"
+        >
+
+        <label class="mt-2 flex items-center gap-2">
+          <input id="mostrarClave" type="checkbox">
+          Mostrar contraseña
+        </label>
+      </div>
+
+      <p id="mensajeCuenta" role="status" aria-live="polite"
+         class="text-center text-sm"></p>
+
+      <button id="enviarCuenta" type="submit"
+        class="w-full rounded-xl bg-blue-950 p-4 text-lg font-bold text-white">
+        Entrar a mi cuenta
+      </button>
+
+    </form>
+
+    <button id="cambiarCuenta" type="button"
+      class="mt-5 w-full text-center font-semibold text-blue-800 underline">
+      ¿Primera vez aquí? Crear una cuenta
+    </button>
+
+  </div>
+</div>
+
+  </header>
+
+  <main>
+    <!-- PROMESAS DE VALOR -->
+    <section class="wrap pt-6">
+      <div class="grid gap-4 md:grid-cols-2">
+        <a href="#ofertas" class="lift group flex items-center gap-4 rounded-2xl bg-navy text-white p-5 sm:p-6">
+          <span class="grid place-items-center shrink-0 h-14 w-14 rounded-2xl bg-sky-400/20 text-sky-200">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+          </span>
+          <span class="min-w-0">
+            <span class="block text-lg sm:text-xl font-extrabold leading-tight">¡Estamos preparando Útiles Expres para ti!</span>
+            <span class="block text-sm text-sky-100/80 mt-1">Próximamente podrás explorar nuestros productos y realizar tus pedidos.</span>
+          </span>
+          <svg class="ml-auto hidden sm:block shrink-0 transition-transform group-hover:translate-x-1" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#ofertas" class="lift group flex items-center gap-4 rounded-2xl bg-emerald2 text-white p-5 sm:p-6">
+          <span class="grid place-items-center shrink-0 h-14 w-14 rounded-2xl bg-white/20">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h12v10H2zM14 9h4l3 3v4h-7z"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg>
+          </span>
+          <span class="min-w-0">
+            <span class="block text-lg sm:text-xl font-extrabold leading-tight">Estamos preparando nuestras opciones de envío</span>
+            <span class="block text-sm text-emerald-50/90 mt-1">Próximamente informaremos sobre las zonas de entrega y los costos de envío.</span>
+          </span>
+          <svg class="ml-auto hidden sm:block shrink-0 transition-transform group-hover:translate-x-1" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- CATEGORÍAS -->
+    <section class="wrap pt-12" aria-labelledby="h-cat">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[.18em] text-crimson">Compra por categoría</p>
+          <h2 id="h-cat" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-navy mt-1">Todo para crear, estudiar y trabajar</h2>
+        </div>
+        <a href="#" class="hidden sm:inline text-sm font-semibold text-navy hover:underline">Ver todas</a>
+      </div>
+      <div id="catGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5"></div>
+    </section>
+
+    <!-- CAMPAÑA BLACK FRIDAY -->
+    <section id="ofertas" class="sale-bg mt-14 text-white" aria-labelledby="h-bf">
+      <div class="wrap py-12 sm:py-16">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+          <div class="max-w-xl">
+            <span class="inline-flex rounded-md overflow-hidden text-xs font-extrabold tracking-wider"><span class="bg-black px-3 py-1.5 border border-white/20 border-r-0 rounded-l-md">CAMPAÑA</span><span class="bg-crimson px-3 py-1.5">PRÓXIMAMENTE</span></span>
+            <h2 id="h-bf" class="text-4xl sm:text-5xl font-extrabold tracking-tight mt-4 leading-[1.05]">Black Friday <span class="text-crimson">ÚtilesExpres</span></h2>
+            <p class="text-slate-300 mt-3 text-base sm:text-lg">Nueve productos de arte y dibujo con precios que no vuelven hasta el próximo año. Termina el 27 de noviembre.</p>
+          </div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[.18em] text-emerald-300 mb-3">La oferta termina en</p>
+            <div id="countdown" class="grid grid-cols-5 gap-2 sm:gap-3" role="timer" aria-live="off"></div>
+          </div>
+        </div>
+        <div id="saleGrid" class="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-10"></div>
+        <p id="saleEmpty" hidden class="text-center text-slate-300 py-10">No hay ofertas que coincidan con tu búsqueda.</p>
+      </div>
+    </section>
+
+    <!-- NOVEDADES -->
+    <section id="novedades" class="bg-slate-50 py-12 sm:py-16" aria-labelledby="h-new">
+      <div class="wrap">
+        <div class="flex items-end justify-between gap-4 mb-6">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[.18em] text-sky-600">Recién llegados</p>
+            <h2 id="h-new" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-navy mt-1">Novedades</h2>
+          </div>
+          <div class="flex gap-2">
+            <button id="prev" class="btn h-11 w-11 grid place-items-center rounded-full bg-white border border-slate-200 text-navy hover:bg-navy hover:text-white" aria-label="Anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button id="next" class="btn h-11 w-11 grid place-items-center rounded-full bg-white border border-slate-200 text-navy hover:bg-navy hover:text-white" aria-label="Siguiente"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+        <div id="carousel" class="no-bar flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 -mx-1 px-1 pt-1"></div>
+        <p id="newEmpty" hidden class="text-center text-slate-500 py-6">No hay novedades que coincidan con tu búsqueda.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy text-slate-300">
+    <div class="wrap py-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 text-sm">
+      <div class="min-w-0">
+        <p class="text-white text-lg font-extrabold">ÚtilesExpres</p>
+        <p class="mt-2">Papelería, arte y oficina para quienes crean todos los días.</p>
+      </div>
+      <div><p class="text-white font-semibold mb-2">Comprar</p><ul class="space-y-1.5"><li><a class="hover:text-white" href="#novedades">Novedades</a></li><li><a class="hover:text-white" href="#ofertas">Ofertas</a></li><li><a class="hover:text-white" href="#">Marcas</a></li></ul></div>
+      <div><p class="text-white font-semibold mb-2">Ayuda</p><ul class="space-y-1.5"><li><a class="hover:text-white" href="#">Envíos y entregas</a></li><li><a class="hover:text-white" href="#">Cambios y devoluciones</a></li><li><a class="hover:text-white" href="#">Contacto</a></li></ul></div>
+      <div><p class="text-white font-semibold mb-2">Medios de pago</p><p>Tarjeta, QR y transferencia bancaria.</p></div>
+    </div>
+    <div class="border-t border-white/10"><p class="wrap py-4 text-xs text-slate-400">© 2026 ÚtilesExpres. Página de demostración.</p></div>
+  </footer>
+
+  
+<!-- VENTANA DEL CARRITO - TRAZO -->
+<div id="panelCarrito"
+     class="hidden fixed inset-0 z-[300] bg-slate-950/60 backdrop-blur-sm items-center justify-center p-4">
+
+  <div class="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white text-slate-800 shadow-2xl">
+
+    <!-- Encabezado -->
+    <div class="bg-[#0B1D3A] p-5 text-white flex items-center justify-between">
+      <div>
+        <h2 class="text-xl font-bold">Mi carrito 🛒</h2>
+        <p class="text-sm text-blue-200">ÚtilesExpres | Papelería y útiles escolares</p>
+      </div>
+
+      <button id="cerrarCarrito" type="button"
+              class="text-3xl hover:text-blue-200"
+              aria-label="Cerrar carrito">
+        &times;
+      </button>
+    </div>
+
+    <!-- Productos -->
+    <div id="listaCarrito" class="p-5 space-y-4">
+      <p class="text-center text-slate-500 py-8">
+        Tu carrito está vacío.
+      </p>
+    </div>
+
+    <!-- Total -->
+    <div class="border-t border-slate-200 p-5">
+      <div class="flex items-center justify-between mb-5">
+        <span class="text-lg font-semibold">Subtotal:</span>
+        <span id="totalCarrito"
+              class="text-2xl font-bold text-[#0B1D3A]">
+          Bs 0
+        </span>
+      </div>
+
+      <button id="finalizarCompra" type="button"
+              class="w-full rounded-xl bg-[#0B1D3A] hover:bg-[#17345C] text-white font-bold py-3 transition">
+        Continuar con mi compra
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- FORMULARIO DE COMPRA - TRAZO -->
+<div id="panelCompra"
+     class="hidden fixed inset-0 z-[350] bg-slate-950/60 backdrop-blur-sm items-center justify-center p-4">
+
+  <div class="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white text-slate-800 shadow-2xl">
+
+    <!-- Encabezado -->
+    <div class="bg-[#0B1D3A] p-5 text-white flex items-center justify-between">
+      <div>
+        <h2 class="text-xl font-bold">Datos de compra 📦</h2>
+        <p class="text-sm text-blue-200">ÚtilesExpres | Papelería y útiles escolares</p>
+      </div>
+
+      <button id="cerrarCompra" type="button"
+              class="text-3xl hover:text-blue-200"
+              aria-label="Cerrar formulario">
+        &times;
+      </button>
+    </div>
+
+    <!-- Formulario -->
+    <form id="formularioCompra" class="p-5 space-y-4">
+
+      <div>
+        <label for="nombreCliente" class="block text-sm font-semibold mb-1">
+          Nombre completo
+        </label>
+        <input id="nombreCliente" type="text" required
+               autocomplete="name"
+               class="w-full rounded-lg border border-slate-300 p-3"
+               placeholder="Tu nombre completo">
+      </div>
+
+      <div>
+        <label for="telefonoCliente" class="block text-sm font-semibold mb-1">
+          Teléfono de contacto
+        </label>
+        <input id="telefonoCliente" type="tel" required
+               autocomplete="tel"
+               class="w-full rounded-lg border border-slate-300 p-3"
+               placeholder="Tu número de teléfono">
+      </div>
+
+      <div>
+        <label for="direccionCliente" class="block text-sm font-semibold mb-1">
+          Dirección de entrega
+        </label>
+        <textarea id="direccionCliente" required rows="3"
+                  autocomplete="street-address"
+                  class="w-full rounded-lg border border-slate-300 p-3"
+                  placeholder="Dirección para recibir tu pedido"></textarea>
+      </div>
+
+      <div>
+        <label for="notaCliente" class="block text-sm font-semibold mb-1">
+          Indicaciones adicionales (opcional)
+        </label>
+        <textarea id="notaCliente" rows="2"
+                  class="w-full rounded-lg border border-slate-300 p-3"
+                  placeholder="Referencias para la entrega"></textarea>
+      </div>
+
+      <div class="border-t border-slate-200 pt-4">
+        <div class="flex justify-between items-center">
+          <span class="font-semibold">Subtotal del pedido:</span>
+          <span id="totalCompra"
+                class="text-xl font-bold text-[#0B1D3A]">
+            Bs 0
+          </span>
+        </div>
+        <p class="text-xs text-slate-500 mt-2">
+          El costo de envío, si corresponde, se confirmará después.
+        </p>
+      </div>
+
+      <button type="submit"
+              class="w-full rounded-xl bg-[#0B1D3A] hover:bg-[#17345C] text-white font-bold py-3 transition">
+        Revisar mi pedido
+      </button>
+
+    </form>
+  </div>
+</div>
+
+<!-- REVISIÓN DEL PEDIDO - TRAZO -->
+<div id="panelRevision"
+     class="hidden fixed inset-0 z-[400] bg-slate-950/60 backdrop-blur-sm items-center justify-center p-4">
+
+  <div class="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white text-slate-800 shadow-2xl">
+
+    <!-- Encabezado -->
+    <div class="bg-[#0B1D3A] p-5 text-white flex items-center justify-between">
+      <div>
+        <h2 class="text-xl font-bold">Revisar mi pedido 📋</h2>
+        <p class="text-sm text-blue-200">
+          Verifica tus datos antes de confirmar
+        </p>
+      </div>
+
+      <button id="cerrarRevision" type="button"
+              class="text-3xl hover:text-blue-200"
+              aria-label="Cerrar revisión">
+        &times;
+      </button>
+    </div>
+
+    <div class="p-5 space-y-5">
+
+      <!-- Datos del cliente -->
+      <div>
+        <h3 class="font-bold text-lg mb-3">
+          Datos de entrega
+        </h3>
+
+        <div id="resumenCliente"
+             class="bg-slate-50 rounded-xl p-4 text-sm space-y-2">
+        </div>
+      </div>
+
+      <!-- Productos -->
+      <div>
+        <h3 class="font-bold text-lg mb-3">
+          Productos del pedido
+        </h3>
+
+        <div id="resumenProductos"
+             class="space-y-3">
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div class="border-t border-slate-200 pt-4">
+        <div class="flex justify-between items-center">
+          <span class="font-semibold">
+            Subtotal:
+          </span>
+
+          <span id="totalRevision"
+                class="text-2xl font-bold text-[#0B1D3A]">
+            Bs 0
+          </span>
+        </div>
+
+        <p class="text-xs text-slate-500 mt-2">
+          El costo de envío, si corresponde, se confirmará después.
+        </p>
+      </div>
+
+      <!-- Acciones -->
+      <div class="flex flex-col gap-3">
+
+        <button id="confirmarPedido" type="button"
+                class="w-full rounded-xl bg-[#0B1D3A] hover:bg-[#17345C] text-white font-bold py-3 transition">
+          Confirmar mi pedido
+        </button>
+
+        <button id="volverCompra" type="button"
+                class="w-full rounded-xl border border-slate-300 text-slate-700 font-semibold py-3 hover:bg-slate-100 transition">
+          Volver y editar mis datos
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-6 z-50 pointer-events-none opacity-0 translate-y-2 transition-all duration-300 bg-navy text-white text-sm font-semibold rounded-full px-5 py-3 shadow-2xl" role="status" aria-live="polite" style="margin-bottom: env(safe-area-inset-bottom, 0px)"></div>
+</div>
+
+<script type="module">
+  import "./JS/supabase.js";
+  import "./JS/tienda.js";
+</script>
+
